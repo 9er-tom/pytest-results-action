@@ -38,7 +38,7 @@ async function postResults(xmls, inputs) {
 
     const pr_number = ghApi.context.payload.pull_request.number;
     const repo = ghApi.context.repo.repo;
-    const owner = ghApi.context.repo.owner.login;
+    const owner = ghApi.context.repo.owner;
 
     await octokit.rest.issues.createComment({
       owner: owner,
