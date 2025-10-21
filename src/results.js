@@ -159,7 +159,7 @@ async function addComment(inputs) {
   const repo = ghApi.context.repo.repo;
   const owner = ghApi.context.repo.owner;
 
-  const { data: comments } = await octokit.issues.listComments({
+  const { data: comments } = await octokit.rest.issues.listComments({
     owner: owner,
     repo: repo,
     issue_number: pr_number,
@@ -173,14 +173,14 @@ async function addComment(inputs) {
   });
 
   if (comment) {
-    await octokit.issues.updateComment({
+    await octokit.rest.issues.updateComment({
       repo: repo,
       owner: owner,
       comment_id: comment.id,
       body: gha.summary.stringify(),
     });
   } else {
-    await octokit.issues.createComment({
+    await octokit.rest.issues.createComment({
       repo: repo,
       owner: owner,
       issue_number: pr_number,
