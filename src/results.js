@@ -1,6 +1,7 @@
 const fs = require("fs").promises;
 
 const gha = require("@actions/core");
+const ghApi = require("@actions/github");
 
 const { zip, prettyDuration } = require("./utils");
 
