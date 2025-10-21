@@ -84,3 +84,4 @@ jobs:
         uses: ./
         with:
           path: test-results.xml
+          pr-comment: true
