@@ -30,11 +30,24 @@ async function postResults(xmls, inputs) {
   }
 
   addResults(results, inputs.title, inputs.summary, inputs.displayOptions);
-  await gha.summary.write();
 
-  if (inputs.prComment) {
+  console.log(gha.summary.stringify()); //TODO remove debug log
+
+  if (inputs.prComment && ghApi.context.payload.pull_request) {
+    const octokit = ghApi.getOctokit(inputs.githubToken);
+
+    const pr_number = ghApi.context.payload.pull_request.number;
+    const repo = ghApi.context.repo.repo;
+    const owner = ghApi.context.repo.owner.login;
+
+    await octokit.rest.issues.createComment({
+      owner: owner,
+      repo: repo,
+      issue_number: pr_number,
+      body: gha.summary.stringify(),
+    });
   }
-  gha.info(gha.summary.stringify());
+  await gha.summary.write();
 }
 
 async function extractResults(xmls) {
