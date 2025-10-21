@@ -33931,7 +33931,7 @@ async function postResults(xmls, inputs) {
   addResults(results, inputs.title, inputs.summary, inputs.displayOptions);
 
   if (inputs.prComment && ghApi.context.payload.pull_request) {
-    await addComment();
+    await addComment(inputs);
   }
   await gha.summary.write();
 }
@@ -34051,7 +34051,7 @@ function addSummary(results) {
   gha.summary.addTable(rows);
 }
 
-async function addComment(results) {
+async function addComment(inputs) {
   const octokit = ghApi.getOctokit(inputs.githubToken);
 
   const pr_number = ghApi.context.payload.pull_request.number;
